@@ -1,9 +1,13 @@
+import { useState } from 'react';
+import { resultsBook } from './data';
+
 export default function Homepage() {
   return (
     <>
       <NavBar />
       <TitlePage />
       <CustomBanner color="red" text="welcome" />
+      <ResultsList />
     </>
   );
 }
@@ -23,7 +27,9 @@ function NavBar() {
           placeholder="Search"
           aria-label="Search"
         />
-        <button class="btn btn-outline-dark my-2 my-sm-0 mx-3" type="submit">
+        <button
+          className="btn btn-outline-dark my-2 my-sm-0 mx-3"
+          type="submit">
           Search
         </button>
       </form>
@@ -53,11 +59,37 @@ function CustomBanner({ text, color }) {
   return (
     <div onClick={handleClick}>
       <h3 style={{ color: color }}>{text}</h3>
-      <CountButton onClick={handleClick} />
     </div>
   );
 }
 
-function CountButton({ count, onClick }) {
-  return <button onClick={onClick}>{count}</button>;
+function ResultsList() {
+  const booksMap = resultsBook.map((book) => (
+    <div key={book.isbn}>
+      <div>{book.title}</div>
+    </div>
+  ));
+
+  const [sorting, setSorting] = useState(booksMap);
+  console.log('this is the book map', booksMap);
+
+  function handleClick() {
+    const sortedBooks = resultsBook.sort((a, b) => {
+      return Number(a.isbn) - Number(b.isbn);
+    });
+    const sortedBooksMap = sortedBooks.map((book) => (
+      <div key={book.isbn}>
+        <div>{book.title}</div>
+      </div>
+    ));
+    setSorting(sortedBooksMap);
+    console.log('this is running', resultsBook);
+  }
+
+  return (
+    <>
+      <button onClick={handleClick}>Clicked</button>
+      {sorting}
+    </>
+  );
 }
