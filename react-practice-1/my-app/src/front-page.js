@@ -73,40 +73,29 @@ function ResultsList() {
 
   const [sorting, setSorting] = useState(defaultBooksMap);
   const [selects, setSelects] = useState('Default');
-  // console.log('this is the book map', booksMap);
+
+  function generateSortedBooksMap(sortFunction) {
+    const sortedBooks = [...resultsBook].sort(sortFunction);
+    return sortedBooks.map((book) => (
+      <div key={book.isbn}>
+        <div>{book.title}</div>
+        <img alt={book.title} src={book.image} />
+      </div>
+    ));
+  }
 
   function handleClick() {
-    // console.log(selects)
     if (selects === 'Default') {
-      console.log('default');
       setSorting(defaultBooksMap);
-    }
-
-    if (selects === 'Ascending') {
-      console.log('Ascending');
-      const sortedBooks = [...resultsBook].sort((a, b) => {
-        return Number(a.isbn) - Number(b.isbn);
-      });
-      const sortedBooksMap = sortedBooks.map((book) => (
-        <div key={book.isbn}>
-          <div>{book.title}</div>
-          <img alt={book.title} src={book.image} />
-        </div>
-      ));
+    } else if (selects === 'Ascending') {
+      const sortedBooksMap = generateSortedBooksMap(
+        (a, b) => Number(a.isbn) - Number(b.isbn)
+      );
       setSorting(sortedBooksMap);
-    }
-
-    if (selects === 'Descending') {
-      console.log('Descend');
-      const sortedBooks = [...resultsBook].sort((a, b) => {
-        return Number(b.isbn) - Number(a.isbn);
-      });
-      const sortedBooksMap = sortedBooks.map((book) => (
-        <div key={book.isbn}>
-          <div>{book.title}</div>
-          <img alt={book.title} src={book.image} />
-        </div>
-      ));
+    } else if (selects === 'Descending') {
+      const sortedBooksMap = generateSortedBooksMap(
+        (a, b) => Number(b.isbn) - Number(a.isbn)
+      );
       setSorting(sortedBooksMap);
     }
   }
@@ -115,7 +104,7 @@ function ResultsList() {
     <>
       <button onClick={handleClick}>Clicked</button>
       <label>Filter</label>
-      <select onChange={(e) => setSelects(e.target.value)}>
+      <select onChange={(e) => setSelects(e.target.value)} value={selects}>
         <option value="Default">Default</option>
         <option value="Ascending">Ascending</option>
         <option value="Descending">Descending</option>
