@@ -1,9 +1,13 @@
 import './App.css';
 import { Header } from './Header';
+import { Headers } from './Headers';
 
 function App() {
   return (
-    <Header />
+    <div>
+      <Header />
+      <Headers />
+    </div>
     // <div class="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6">
     //   <img
     //     class="block mx-auto h-24 rounded-full sm:mx-0 sm:shrink-0"
