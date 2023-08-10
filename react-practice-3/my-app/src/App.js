@@ -1,12 +1,20 @@
 import './App.css';
-import { Header } from './Header';
+import { Route, Routes } from 'react-router-dom';
 import { Headers } from './Headers';
+import Homepage from './Homepage';
+import ResultsPage from './Results';
 
 function App() {
   return (
     <div>
-      <Header />
-      <Headers />
+      <Routes>
+        <Route path="/" element={<Headers />}>
+          <Route index element={<Homepage />} />
+          <Route path="results" element={<ResultsPage />} />
+        </Route>
+      </Routes>
+      {/* <Header />
+      <Headers /> */}
     </div>
     // <div class="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6">
     //   <img
